@@ -47,7 +47,7 @@ python-dotenv
 
 ### 1. Clone the Repository
 ```bash
-git clone [<repository-url>](https://github.com/Million-art/slack-bot.git)
+git clone (https://github.com/Million-art/slack-bot.git)
 cd slack-bot
 ```
 
@@ -103,8 +103,8 @@ Add the following Bot Token Scopes:
 
 #### Configure Slash Commands
 Create the following slash command:
-- **Command**: `/datamanager`
-- **Request URL**: `https://your-domain.com/slack/command`
+- **Command**: `/start`
+- **Request URL**: `https://your-domain.com/api/command`
 - **Short Description**: Manage Google Sheets, Excel, and CSV files
 
 ### 5. Environment Configuration
@@ -386,9 +386,6 @@ LOG_LEVEL=INFO
 3. Make changes with tests
 4. Submit pull request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Changelog
 
