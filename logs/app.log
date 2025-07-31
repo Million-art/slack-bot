@@ -5060,3 +5060,45 @@ The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response
 2025-07-31 15:14:12,177 - app.services.google_service - INFO - read_file_data:1280 - Reading file data: 1HQBtL1m90bvvW7jToguxDRKHLAfnVyhy
 2025-07-31 15:14:12,602 - app.services.google_service - INFO - read_file_data:1285 - File type determined: csv
 2025-07-31 15:14:14,590 - app.services.slack_service - INFO - post_message:75 - Posted message to channel U0968C1G72L
+2025-07-31 15:22:28,972 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-07-31 15:22:28,973 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-07-31 15:22:31,560 - app.services.google_service - INFO - _get_oauth_credentials:60 - Loaded OAuth2 token from file
+2025-07-31 15:22:31,569 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 15:22:31,591 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 15:22:31,695 - app.services.google_service - INFO - _init_google_clients:249 - Google API clients initialized with OAuth2
+2025-07-31 15:22:32,284 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.190:5000
+2025-07-31 15:22:32,288 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-07-31 15:22:32,300 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-07-31 15:22:33,334 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-07-31 15:22:33,334 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-07-31 15:22:35,196 - app.services.google_service - INFO - _get_oauth_credentials:60 - Loaded OAuth2 token from file
+2025-07-31 15:22:35,201 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 15:22:35,212 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 15:22:35,234 - app.services.google_service - INFO - _init_google_clients:249 - Google API clients initialized with OAuth2
+2025-07-31 15:22:35,344 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-07-31 15:22:35,357 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
+2025-07-31 22:46:14,246 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-07-31 22:46:14,247 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-07-31 22:46:22,340 - app.services.google_service - INFO - _get_oauth_credentials:60 - Loaded OAuth2 token from file
+2025-07-31 22:46:23,929 - app.services.google_service - INFO - _get_oauth_credentials:69 - Refreshed OAuth2 token
+2025-07-31 22:46:23,931 - app.services.google_service - INFO - _get_oauth_credentials:94 - Saved OAuth2 token to file
+2025-07-31 22:46:23,943 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 22:46:23,994 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 22:46:24,033 - app.services.google_service - INFO - _init_google_clients:249 - Google API clients initialized with OAuth2
+2025-07-31 22:46:24,187 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.190:5000
+2025-07-31 22:46:24,188 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-07-31 22:46:24,192 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-07-31 22:46:25,185 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-07-31 22:46:25,186 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-07-31 22:46:26,641 - app.services.google_service - INFO - _get_oauth_credentials:60 - Loaded OAuth2 token from file
+2025-07-31 22:46:26,646 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 22:46:26,657 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-07-31 22:46:26,662 - app.services.google_service - INFO - _init_google_clients:249 - Google API clients initialized with OAuth2
+2025-07-31 22:46:26,749 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-07-31 22:46:26,761 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
