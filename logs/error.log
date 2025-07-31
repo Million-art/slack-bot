@@ -1,0 +1,165 @@
+2025-07-30 17:30:08,105 - main - ERROR - log_exception:1414 - Exception on /api/slack/command [POST]
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1851, in make_response
+    rv.status_code = status
+    ^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 149, in status_code
+    self.status = code  # type: ignore
+    ^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 158, in status
+    self._status, self._status_code = self._clean_status(value)
+                                      ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 164, in _clean_status
+    value = value.strip()
+            ^^^^^^^^^^^
+AttributeError: 'Response' object has no attribute 'strip'
+2025-07-30 17:30:08,120 - main - ERROR - internal_error:57 - Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-07-30 17:30:32,024 - main - ERROR - log_exception:1414 - Exception on /api/slack/command [POST]
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1851, in make_response
+    rv.status_code = status
+    ^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 149, in status_code
+    self.status = code  # type: ignore
+    ^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 158, in status
+    self._status, self._status_code = self._clean_status(value)
+                                      ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 164, in _clean_status
+    value = value.strip()
+            ^^^^^^^^^^^
+AttributeError: 'Response' object has no attribute 'strip'
+2025-07-30 17:30:32,038 - main - ERROR - internal_error:57 - Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-07-30 17:32:40,253 - main - ERROR - log_exception:1414 - Exception on /api/slack/command [POST]
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1487, in full_dispatch_request
+    return self.finalize_request(rv)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1506, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\flask\app.py", line 1851, in make_response
+    rv.status_code = status
+    ^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 149, in status_code
+    self.status = code  # type: ignore
+    ^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 158, in status
+    self._status, self._status_code = self._clean_status(value)
+                                      ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\werkzeug\sansio\response.py", line 164, in _clean_status
+    value = value.strip()
+            ^^^^^^^^^^^
+AttributeError: 'Response' object has no attribute 'strip'
+2025-07-30 17:32:40,348 - main - ERROR - internal_error:57 - Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-07-30 17:43:12,041 - app.services.google_service - ERROR - read_sheet_data:91 - Error reading sheet data: <HttpError 404 when requesting https://sheets.googleapis.com/v4/spreadsheets/your-sheet-id/values/A1%3AB10?alt=json returned "Requested entity was not found.". Details: "Requested entity was not found.">
+2025-07-30 17:43:12,068 - app.handlers.command_handler - ERROR - handle_get_sheet_data:139 - Error getting sheet data: <HttpError 404 when requesting https://sheets.googleapis.com/v4/spreadsheets/your-sheet-id/values/A1%3AB10?alt=json returned "Requested entity was not found.". Details: "Requested entity was not found.">
+2025-07-30 20:39:29,251 - app.services.google_service - ERROR - write_sheet_data:140 - Error writing sheet data: Invalid range format: 11
+2025-07-30 20:39:29,257 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:527 - Error handling write data modal submission: Invalid range format: 11
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 510, in handle_write_data_modal_submission
+    google_service.write_sheet_data(sheet_id, range_name, value=value)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 117, in write_sheet_data
+    self._validate_range(range_name)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 459, in _validate_range
+    raise ValueError(f"Invalid range format: {range_name}")
+ValueError: Invalid range format: 11
+2025-07-30 20:39:59,584 - app.services.google_service - ERROR - write_sheet_data:140 - Error writing sheet data: Invalid range format: 12
+2025-07-30 20:39:59,585 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:527 - Error handling write data modal submission: Invalid range format: 12
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 510, in handle_write_data_modal_submission
+    google_service.write_sheet_data(sheet_id, range_name, value=value)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 117, in write_sheet_data
+    self._validate_range(range_name)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 459, in _validate_range
+    raise ValueError(f"Invalid range format: {range_name}")
+ValueError: Invalid range format: 12
+2025-07-30 20:45:55,638 - app.services.google_service - ERROR - write_sheet_data:140 - Error writing sheet data: Invalid range format: a1
+2025-07-30 20:45:55,640 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:545 - Error handling write data modal submission: Invalid range format: a1
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 528, in handle_write_data_modal_submission
+    google_service.write_sheet_data(sheet_id, range_name, value=value)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 117, in write_sheet_data
+    self._validate_range(range_name)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\google_service.py", line 459, in _validate_range
+    raise ValueError(f"Invalid range format: {range_name}")
+ValueError: Invalid range format: a1
+2025-07-30 20:58:08,146 - app.services.slack_service - ERROR - upload_file:824 - Slack API error uploading file: The request to the Slack API failed. (url: https://www.slack.com/api/files.upload)
+The server responded with: {'ok': False, 'error': 'method_deprecated'}
+2025-07-30 21:54:00,923 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-30 21:54:00,958 - app.handlers.command_handler - ERROR - handle_create_sheet_action:328 - Error handling create sheet action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 323, in handle_create_sheet_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-30 21:56:26,122 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-30 21:56:26,124 - app.handlers.command_handler - ERROR - handle_create_sheet_action:321 - Error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-30 21:59:44,013 - app.services.google_service - ERROR - create_new_sheet:332 - Error creating new sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-30 21:59:44,014 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-30 22:51:56,725 - app.services.google_service - ERROR - create_new_sheet:332 - Error creating new sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-30 22:51:56,743 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 07:26:01,845 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-31 07:26:02,020 - app.handlers.command_handler - ERROR - handle_create_sheet_action:321 - Error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
+2025-07-31 07:27:31,682 - app.services.google_service - ERROR - create_new_sheet:332 - Error creating new sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 07:27:31,684 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 07:58:16,854 - app.services.google_service - ERROR - create_new_sheet:332 - Error creating new sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 07:58:16,947 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 08:08:39,526 - app.services.google_service - ERROR - create_new_sheet:332 - Error creating new sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 08:08:39,535 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
+2025-07-31 09:28:57,987 - app.services.google_service - ERROR - create_new_sheet:406 - Error creating new sheet: <HttpError 503 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The service is currently unavailable.". Details: "The service is currently unavailable.">
+2025-07-31 09:28:57,988 - app.handlers.command_handler - ERROR - create_sheet_async:753 - Error in async sheet creation: <HttpError 503 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The service is currently unavailable.". Details: "The service is currently unavailable.">
