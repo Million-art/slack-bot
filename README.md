@@ -47,7 +47,7 @@ python-dotenv
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone [<repository-url>](https://github.com/Million-art/slack-bot.git)
 cd slack-bot
 ```
 
