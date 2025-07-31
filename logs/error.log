@@ -163,3 +163,280 @@ The server responded with: {'ok': False, 'error': 'expired_trigger_id'}
 2025-07-31 08:08:39,535 - app.handlers.command_handler - ERROR - handle_create_sheet_modal_submission:732 - Error creating sheet: <HttpError 403 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The caller does not have permission". Details: "The caller does not have permission">
 2025-07-31 09:28:57,987 - app.services.google_service - ERROR - create_new_sheet:406 - Error creating new sheet: <HttpError 503 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The service is currently unavailable.". Details: "The service is currently unavailable.">
 2025-07-31 09:28:57,988 - app.handlers.command_handler - ERROR - create_sheet_async:753 - Error in async sheet creation: <HttpError 503 when requesting https://sheets.googleapis.com/v4/spreadsheets?alt=json returned "The service is currently unavailable.". Details: "The service is currently unavailable.">
+2025-07-31 11:07:32,904 - app.services.google_service - ERROR - write_excel_to_drive:610 - Error writing Excel to Drive: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmp7vxo76o8.xlsx'
+2025-07-31 11:07:33,074 - app.handlers.command_handler - ERROR - create_excel_async:883 - Error in async Excel creation: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmp7vxo76o8.xlsx'
+2025-07-31 11:10:48,182 - app.services.google_service - ERROR - write_csv_to_drive:497 - Error writing CSV to Drive: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpx9mbtm9i.csv'
+2025-07-31 11:10:48,183 - app.handlers.command_handler - ERROR - create_csv_async:973 - Error in async CSV creation: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpx9mbtm9i.csv'
+2025-07-31 11:15:39,524 - app.handlers.command_handler - ERROR - handle_get_data_sheet_action:243 - Failed to parse sheet info from action value
+2025-07-31 11:15:50,355 - app.handlers.command_handler - ERROR - handle_get_data_sheet_action:243 - Failed to parse sheet info from action value
+2025-07-31 11:17:28,125 - app.handlers.command_handler - ERROR - handle_get_data_sheet_action:243 - Failed to parse sheet info from action value
+2025-07-31 11:21:11,978 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:21:11,981 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:397 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 392, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:21:25,657 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:21:25,659 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:397 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 392, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:27:57,614 - app.handlers.command_handler - ERROR - refresh_data:350 - Error refreshing sheet data: 'NoneType' object has no attribute 'upper'
+2025-07-31 11:33:56,492 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:33:56,496 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:398 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 393, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:36:52,051 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:36:52,053 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:398 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 393, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:37:37,010 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:37:37,014 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:398 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 393, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:38:41,543 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:38:41,545 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:398 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 393, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:39:03,291 - app.services.slack_service - ERROR - open_modal:144 - Slack API error opening modal: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:39:03,295 - app.handlers.command_handler - ERROR - handle_open_update_modal_action:398 - Error handling open update modal action: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+Traceback (most recent call last):
+  File "C:\Users\dell\Desktop\slack-bot\app\handlers\command_handler.py", line 393, in handle_open_update_modal_action
+    slack_service.open_modal(trigger_id, modal)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\app\services\slack_service.py", line 135, in open_modal
+    response = self.client.views_open(
+        trigger_id=trigger_id,
+        view=modal
+    )
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\client.py", line 4606, in views_open
+    return self.api_call("views.open", json=kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 156, in api_call
+    return self._sync_send(api_url=api_url, req_args=req_args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 187, in _sync_send
+    return self._urllib_api_call(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        token=token,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        additional_headers=headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\base_client.py", line 317, in _urllib_api_call
+    ).validate()
+      ~~~~~~~~^^
+  File "C:\Users\dell\Desktop\slack-bot\.venv\Lib\site-packages\slack_sdk\web\slack_response.py", line 199, in validate
+    raise e.SlackApiError(message=msg, response=self)
+slack_sdk.errors.SlackApiError: The request to the Slack API failed. (url: https://www.slack.com/api/views.open)
+The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response_metadata': {'messages': ['[ERROR] failed to match all allowed schemas [json-pointer:/view]', '[ERROR] failed to match all allowed schemas [json-pointer:/view/title]', '[ERROR] must be less than 25 characters [json-pointer:/view/title/text]']}}
+2025-07-31 11:54:37,004 - app.services.google_service - ERROR - read_excel_by_file_id:610 - Error reading Excel from Drive by file ID: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm
+2025-07-31 11:54:37,007 - app.handlers.command_handler - ERROR - fetch_and_send_excel_data:355 - Error fetching Excel data: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm
+2025-07-31 12:00:58,878 - app.services.google_service - ERROR - read_excel_by_file_id:699 - Error reading Excel from Drive by file ID: File has no extension. Please ensure the file is a valid Excel file (.xlsx, .xlsm, .xltx, .xltm). File name: sales report.xlsx, MIME type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+2025-07-31 12:00:58,881 - app.handlers.command_handler - ERROR - fetch_and_send_excel_data:355 - Error fetching Excel data: File has no extension. Please ensure the file is a valid Excel file (.xlsx, .xlsm, .xltx, .xltm). File name: sales report.xlsx, MIME type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+2025-07-31 12:36:40,315 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:775 - No sheet_id found in private_metadata
+2025-07-31 12:36:58,966 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:775 - No sheet_id found in private_metadata
+2025-07-31 12:44:15,824 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:775 - No sheet_id found in private_metadata
+2025-07-31 13:07:08,079 - app.handlers.command_handler - ERROR - handle_write_data_modal_submission:910 - Error writing to sheet: cannot access local variable 'sheet_id' where it is not associated with a value
+2025-07-31 13:09:47,929 - app.services.google_service - ERROR - write_excel_data:424 - Error writing to Excel file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmphj1ym2ac'
+2025-07-31 13:09:47,932 - app.handlers.command_handler - ERROR - update_data_async:895 - Error in async sheet update: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmphj1ym2ac'
+2025-07-31 14:01:35,046 - app.services.google_service - ERROR - write_file_data:1404 - Failed to write file data: 'GoogleService' object has no attribute '_write_excel_data'
+2025-07-31 14:01:35,051 - app.handlers.command_handler - ERROR - update_data_async:919 - Excel write failed: 'GoogleService' object has no attribute '_write_excel_data'
+2025-07-31 14:01:35,052 - app.handlers.command_handler - ERROR - update_data_async:944 - Error in async sheet update: 'GoogleService' object has no attribute '_write_excel_data'
+2025-07-31 15:09:25,956 - app.services.google_service - ERROR - _write_csv_data:1484 - CSV write failed: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpeg9rywro'
+2025-07-31 15:09:25,960 - app.services.google_service - ERROR - write_file_data:1429 - Failed to write file data: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpeg9rywro'
+2025-07-31 15:09:25,965 - app.handlers.command_handler - ERROR - update_data_async:934 - CSV write failed: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpeg9rywro'
+2025-07-31 15:09:25,976 - app.handlers.command_handler - ERROR - update_data_async:951 - Error in async sheet update: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\dell\\AppData\\Local\\Temp\\tmpeg9rywro'

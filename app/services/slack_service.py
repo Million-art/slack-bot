@@ -187,39 +187,70 @@ class SlackService:
         Returns:
             List[Dict[str, Any]]: Formatted blocks
         """
+        # Handle None source
+        source_display = source.upper() if source else "SHEET"
+        
         blocks = [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"*Data from {source.upper()}*"
+                    "text": f"*Data from {source_display}*"
                 }
             },
             {"type": "divider"}
         ]
+
+        # Add Excel-specific warning
+        if source and source.lower() == 'excel':
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: *Header can't be edited. Row numbers start from the second row.*"
+                }
+            })
+        
+        # Add CSV-specific warning
+        if source and source.lower() == 'csv':
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: *Header can't be edited. Row numbers start from the second row.*"
+                }
+            })
         
         if data:
             # Display header row if available
-            if data:
-                header = " | ".join(data[0]) if data[0] else ""
-                blocks.append({
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f"*`{header}`*"
-                    }
-                })
+            if data and len(data) > 0:
+                # Clean and format header
+                header_cells = [str(cell).strip() if cell else "" for cell in data[0]]
+                header = " | ".join(header_cells)
                 
-                # Display data rows
-                for row in data[1:]:
-                    row_text = " | ".join(row) if row else ""
+                # Only show header if it has content
+                if header.strip():
                     blocks.append({
                         "type": "section",
                         "text": {
-                            "type": "plain_text",
-                            "text": row_text
+                            "type": "mrkdwn",
+                            "text": f"*{header}*"
                         }
                     })
+                
+                # Display data rows
+                for row in data[1:]:
+                    if row:  # Only process non-empty rows
+                        row_cells = [str(cell).strip() if cell else "" for cell in row]
+                        row_text = " | ".join(row_cells)
+                        if row_text.strip():  # Only show non-empty rows
+                            blocks.append({
+                                "type": "section",
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": row_text
+                                }
+                            })
         else:
             blocks.append({
                 "type": "section",
@@ -239,7 +270,7 @@ class SlackService:
                 },
                 "action_id": "refresh_data",
                 "value": json.dumps({
-                    "source": source,
+                    "source": source or "sheet",
                     "params": extra_actions or {}
                 })
             },
@@ -251,7 +282,7 @@ class SlackService:
                 },
                 "action_id": "open_update_modal",
                 "value": json.dumps({
-                    "source": source,
+                    "source": source or "sheet",
                     "params": extra_actions or {}
                 })
             },
@@ -318,7 +349,7 @@ class SlackService:
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*📊 List Excel Files*\nView all available Excel files"
+                    "text": "*📊 List Excel Files*\nView all available Excel files\n\n*Supported formats:* .xlsx, .xlsm, .xltx, .xltm"
                 },
                 "accessory": {
                     "type": "button",
@@ -468,23 +499,36 @@ class SlackService:
         
         return modal
     
-    def build_write_data_modal(self, source: str = "sheet", sheet_id: str = None) -> Dict[str, Any]:
+    def build_write_data_modal(self, source: str = "sheet", file_id: str = None) -> Dict[str, Any]:
         """
         Build modal for writing data.
         
         Args:
             source (str): Data source type
-            sheet_id (str, optional): Sheet ID for sheet operations
+            file_id (str, optional): File ID for Excel/CSV operations or Sheet ID for sheet operations
             
         Returns:
             Dict[str, Any]: Modal configuration
         """
+        # Prepare private metadata based on source
+        if source in ["excel", "csv"]:
+            metadata = {
+                "source": source,
+                "file_id": file_id
+            }
+        else:
+            metadata = {
+                "source": source,
+                "sheet_id": file_id  # file_id parameter is actually sheet_id for sheets
+            }
+        
         modal = {
             "type": "modal",
             "callback_id": f"write_{source}_data_modal",
+            "private_metadata": json.dumps(metadata),
             "title": {
                 "type": "plain_text",
-                "text": f"Write {source.upper()} Data"
+                "text": f"Update {source.title()}"
             },
             "submit": {
                 "type": "plain_text",
@@ -546,49 +590,7 @@ class SlackService:
             ]
         }
         
-        # Add source-specific fields
-        if source in ["csv", "excel"]:
-            modal["blocks"].insert(0, {
-                "type": "input",
-                "block_id": "filename_block",
-                "label": {
-                    "type": "plain_text",
-                    "text": "Filename"
-                },
-                "element": {
-                    "type": "plain_text_input",
-                    "action_id": "filename_input",
-                    "placeholder": {
-                        "type": "plain_text",
-                        "text": f"Enter {source.upper()} filename"
-                    }
-                }
-            })
-        
-        if source == "excel":
-            modal["blocks"].insert(2, {
-                "type": "input",
-                "block_id": "sheet_name_block",
-                "label": {
-                    "type": "plain_text",
-                    "text": "Sheet Name (optional)"
-                },
-                "element": {
-                    "type": "plain_text_input",
-                    "action_id": "sheet_name_input",
-                    "placeholder": {
-                        "type": "plain_text",
-                        "text": "Leave empty for first sheet"
-                    }
-                }
-            })
-        
-        # Add private metadata for sheet operations
-        if source == "sheet" and sheet_id:
-            modal["private_metadata"] = json.dumps({
-                "sheet_id": sheet_id,
-                "source": source
-            })
+        # No extra fields needed for update modal - we already have the file_id/sheet_id
         
         return modal
     
@@ -769,7 +771,7 @@ class SlackService:
             if i < len(sheets):  # Don't add divider after last item
                 blocks.append({"type": "divider"})
         
-                return blocks
+        return blocks
     
     def format_excel_list_blocks(self, excel_files: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -798,13 +800,33 @@ class SlackService:
             # Format date
             modified_date = file['modified'][:10] if file['modified'] else 'Unknown'
             
+            # Get file extension for better user info
+            file_extension = os.path.splitext(file['name'])[1].lower()
+            format_info = f"📄 {file_extension.upper()}" if file_extension else "📄 Unknown"
+            
             blocks.append({
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"*{i}. {file['name']}*\n:id: {file['id']}\n:date: Modified: {modified_date}\n:link: <{file['url']}|Open in Google Drive>"
+                    "text": f"*{i}. {file['name']}*\n"
+                           f"🆔 `{file['id']}`\n"
+                           f"📅 Modified: {modified_date}\n"
+                           f"{format_info}\n"
+                           f"🔗 <{file['url']}|Open in Google Drive>"
+                },
+                "accessory": {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Get Data"
+                    },
+                    "action_id": f"get_data_excel_{file['id']}",
+                    "value": file['id']
                 }
             })
+            
+            if i < len(excel_files):  # Don't add divider after last item
+                blocks.append({"type": "divider"})
         
         return blocks
     
@@ -839,9 +861,24 @@ class SlackService:
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"*{i}. {file['name']}*\n:id: {file['id']}\n:date: Modified: {modified_date}\n:link: <{file['url']}|Open in Google Drive>"
+                    "text": f"*{i}. {file['name']}*\n"
+                           f"🆔 `{file['id']}`\n"
+                           f"📅 Modified: {modified_date}\n"
+                           f"🔗 <{file['url']}|Open in Google Drive>"
+                },
+                "accessory": {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Get Data"
+                    },
+                    "action_id": f"get_data_csv_{file['id']}",
+                    "value": file['id']
                 }
             })
+            
+            if i < len(csv_files):  # Don't add divider after last item
+                blocks.append({"type": "divider"})
         
         return blocks
     
