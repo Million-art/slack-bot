@@ -360,6 +360,7 @@ python run.py
 # Required
 SLACK_BOT_TOKEN=xoxb-your-bot-token
 SLACK_SIGNING_SECRET=your-signing-secret
+GOOGLE_CREDENTIALS_FILE=credentials.json
 GOOGLE_OAUTH_CREDENTIALS_FILE=oauth_credentials.json
 GOOGLE_FOLDER_ID=your-folder-id
 
