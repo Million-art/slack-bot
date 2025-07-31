@@ -59,6 +59,9 @@ def create_app():
     
     return app
 
+# Create the WSGI application instance
+app = create_app()
+
 def main():
     """Main application entry point."""
     try:
