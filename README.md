@@ -117,15 +117,10 @@ SLACK_BOT_TOKEN=xoxb-your-bot-token
 SLACK_SIGNING_SECRET=your-signing-secret
 
 # Google Configuration
-GOOGLE_CREDENTIALS_FILE=credentials.json
-GOOGLE_OAUTH_CREDENTIALS_FILE=oauth_credentials.json
+GOOGLE_CREDENTIALS=credentials
+GOOGLE_OAUTH_CREDENTIALS=oauth_credentials
 GOOGLE_FOLDER_ID=your-google-drive-folder-id
-
-# Application Configuration
-FLASK_ENV=production
-SECRET_KEY=your-secret-key
-RATE_LIMIT_REQUESTS=100
-RATE_LIMIT_WINDOW=3600
+ 
 ```
 
 ## Usage
@@ -213,7 +208,6 @@ slack-bot/
 │       └── slack_service.py
 ├── requirements.txt
 ├── run.py
-├── oauth_credentials.json
 └── .env
 ```
 
@@ -283,7 +277,7 @@ slack-bot/
 #### Google API Errors
 **Problem**: "Google credentials issue"
 **Solution**: 
-1. Verify credentials.json file exists
+1. Verify credentials in .env exists
 2. Check service account permissions
 3. Ensure APIs are enabled in Google Cloud Console
 
@@ -300,20 +294,7 @@ slack-bot/
 1. Share Google Drive folder with service account
 2. Verify file permissions
 3. Check GOOGLE_FOLDER_ID configuration
-
-#### Excel File Errors
-**Problem**: "openpyxl does not support file format"
-**Solution**:
-1. Open file in Microsoft Excel
-2. Save as .xlsx format
-3. Re-upload to Google Drive
-
-### Debug Mode
-Enable debug logging by setting:
-```env
-FLASK_ENV=development
-LOG_LEVEL=DEBUG
-```
+ 
 
 ## Development
 
@@ -362,14 +343,7 @@ SLACK_BOT_TOKEN=xoxb-your-bot-token
 SLACK_SIGNING_SECRET=your-signing-secret
 GOOGLE_CREDENTIALS=your-credentials-json-content
 GOOGLE_DRIVE_FOLDER_ID=your-folder-id
-
-# Optional
 GOOGLE_OAUTH_CREDENTIALS=your-oauth-credentials-json-content
-FLASK_ENV=production
-SECRET_KEY=your-secret-key
-RATE_LIMIT_REQUESTS=100
-RATE_LIMIT_WINDOW=3600
-LOG_LEVEL=INFO
 ALLOWED_USER_IDS=U1234567890,U0987654321
 ```
 
