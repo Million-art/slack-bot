@@ -89,22 +89,19 @@ pip install -r requirements.txt
 #### Configure OAuth & Permissions
 Add the following Bot Token Scopes:
 - `chat:write`
-- `chat:write.public`
 - `commands`
 - `files:read`
-- `im:history`
-- `im:read`
-- `im:write`
+- `files:write`
 
 #### Configure Interactivity & Shortcuts
 1. Go to "Interactivity & Shortcuts"
-2. Set Request URL to: `https://your-domain.com/slack/interactions/command`
+2. Set Request URL to: `https://slack-bot-production-92d7.up.railway.app/slack/interactions/command`
 3. Enable Interactivity
 
 #### Configure Slash Commands
 Create the following slash command:
 - **Command**: `/start`
-- **Request URL**: `https://your-domain.com/api/command`
+- **Request URL**: `https://slack-bot-production-92d7.up.railway.app/api/command`
 - **Short Description**: Manage Google Sheets, Excel, and CSV files
 
 ### 5. Environment Configuration
