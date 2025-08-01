@@ -49,12 +49,7 @@ Thumbs.db
 logs/
 *.log
 
-# Credentials
-credentials.json
-oauth_credentials.json
-token.pickle
-*.pem
-*.key
+ 
 
 # Railway
 .railway/
