@@ -753,7 +753,6 @@ class SlackService:
                 "text": {
                     "type": "mrkdwn",
                     "text": f"*{i}. {sheet['name']}*\n"
-                           f"🆔 `{sheet['id']}`\n"
                            f"📅 Modified: {modified_date}\n"
                            f"🔗 <{sheet['url']}|Open in Google Sheets>"
                 },
@@ -809,7 +808,6 @@ class SlackService:
                 "text": {
                     "type": "mrkdwn",
                     "text": f"*{i}. {file['name']}*\n"
-                           f"🆔 `{file['id']}`\n"
                            f"📅 Modified: {modified_date}\n"
                            f"{format_info}\n"
                            f"🔗 <{file['url']}|Open in Google Drive>"
@@ -862,7 +860,6 @@ class SlackService:
                 "text": {
                     "type": "mrkdwn",
                     "text": f"*{i}. {file['name']}*\n"
-                           f"🆔 `{file['id']}`\n"
                            f"📅 Modified: {modified_date}\n"
                            f"🔗 <{file['url']}|Open in Google Drive>"
                 },
