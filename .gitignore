@@ -49,9 +49,5 @@ Thumbs.db
 logs/
 *.log
 
-# Google OAuth tokens
-token.pickle
-*.pickle
-
-# Railway
-.railway/
+ 
+ 
