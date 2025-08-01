@@ -214,17 +214,25 @@ class GoogleService:
     def _init_google_clients(self):
         """Initialize Google API clients."""
         try:
-            # Try OAuth2 first
-            oauth_creds = self._get_oauth_credentials()
-            if oauth_creds:
-                # Use OAuth2 credentials
-                self.sheets_service = build('sheets', 'v4', credentials=oauth_creds)
-                self.drive_service = build('drive', 'v3', credentials=oauth_creds)
-                logger.info("Google API clients initialized with OAuth2")
-                return
+            # Check if we're in production/deployment environment
+            is_production = os.getenv('FLASK_ENV') == 'production' or os.getenv('PORT') is not None
+            
+            # In production, prioritize service account for reliability
+            if is_production:
+                logger.info("Production environment detected, using service account authentication")
+                oauth_creds = None
+            else:
+                # Try OAuth2 first in development
+                oauth_creds = self._get_oauth_credentials()
+                if oauth_creds:
+                    # Use OAuth2 credentials
+                    self.sheets_service = build('sheets', 'v4', credentials=oauth_creds)
+                    self.drive_service = build('drive', 'v3', credentials=oauth_creds)
+                    logger.info("Google API clients initialized with OAuth2")
+                    return
             
             # Fall back to service account
-            logger.info("OAuth2 not available, using service account")
+            logger.info("Using service account authentication")
             
             # Check credentials first
             cred_status = self.check_credentials()
