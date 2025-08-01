@@ -50,14 +50,42 @@ class GoogleService:
     def _get_credentials_from_env(self):
         """Get service account credentials from environment variable."""
         credentials_json = os.getenv('GOOGLE_CREDENTIALS')
-        if credentials_json:
-            try:
-                credentials_dict = json.loads(credentials_json)
-                return service_account.Credentials.from_service_account_info(credentials_dict, scopes=SCOPES)
-            except Exception as e:
-                logger.error(f"Failed to parse GOOGLE_CREDENTIALS from environment: {e}")
+        if not credentials_json:
+            logger.warning("GOOGLE_CREDENTIALS environment variable not found")
+            return None
+            
+        try:
+            # Parse JSON from environment variable
+            credentials_dict = json.loads(credentials_json)
+            
+            # Validate required fields
+            required_fields = ['type', 'project_id', 'private_key_id', 'private_key', 'client_email']
+            missing_fields = [field for field in required_fields if field not in credentials_dict]
+            
+            if missing_fields:
+                logger.error(f"Missing required fields in credentials: {', '.join(missing_fields)}")
                 return None
-        return None
+            
+            # Validate that it's a service account
+            if credentials_dict.get('type') != 'service_account':
+                logger.error("Credentials are not for a service account")
+                return None
+            
+            # Create credentials object
+            credentials = service_account.Credentials.from_service_account_info(
+                credentials_dict, 
+                scopes=SCOPES
+            )
+            
+            logger.info(f"Successfully loaded credentials for service account: {credentials.service_account_email}")
+            return credentials
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse GOOGLE_CREDENTIALS JSON: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Failed to create credentials from environment: {e}")
+            return None
     
     def _get_oauth_credentials_from_env(self):
         """Get OAuth credentials from environment variable."""
@@ -171,92 +199,15 @@ class GoogleService:
                 ]
             }
             
-            # Check required fields in credentials
-            required_fields = ['type', 'project_id', 'private_key_id', 'private_key', 'client_email']
-            missing_fields = [field for field in required_fields if field not in cred_data]
-            
-            if missing_fields:
-                return {
-                    'status': 'incomplete_credentials',
-                    'error': f"Missing required fields in credentials: {', '.join(missing_fields)}",
-                    'solution': "Please ensure your service account JSON file contains all required fields.",
-                    'setup_steps': [
-                        "1. Download a complete service account JSON file from Google Cloud Console",
-                        "2. Ensure the file includes all required fields",
-                        "3. Replace the existing credentials file"
-                    ]
-                }
-            
-            # Test API connection
-            try:
-                scopes = [
-                    'https://www.googleapis.com/auth/spreadsheets',
-                    'https://www.googleapis.com/auth/drive',
-                    'https://www.googleapis.com/auth/drive.file'
-                ]
-                
-                credentials = service_account.Credentials.from_service_account_file(
-                    self.credentials_file, 
-                    scopes=scopes
-                )
-                
-                # Test with a simple API call
-                test_service = build('drive', 'v3', credentials=credentials)
-                test_service.files().list(pageSize=1).execute()
-                
-                return {
-                    'status': 'valid',
-                    'message': "Google credentials are properly configured and working.",
-                    'project_id': cred_data.get('project_id', 'Unknown'),
-                    'client_email': cred_data.get('client_email', 'Unknown')
-                }
-                
-            except Exception as e:
-                error_msg = str(e)
-                if 'invalid_grant' in error_msg.lower():
-                    return {
-                        'status': 'invalid_grant',
-                        'error': "Invalid grant - the service account may not have proper permissions",
-                        'solution': "Please ensure the service account has the necessary API permissions enabled.",
-                        'setup_steps': [
-                            "1. Go to Google Cloud Console",
-                            "2. Enable Google Sheets API and Google Drive API",
-                            "3. Grant the service account appropriate roles",
-                            "4. Share your Google Sheets with the service account email"
-                        ]
-                    }
-                elif 'quota' in error_msg.lower():
-                    return {
-                        'status': 'quota_exceeded',
-                        'error': "API quota exceeded - too many requests",
-                        'solution': "Please wait before making more requests or upgrade your Google Cloud quota.",
-                        'setup_steps': [
-                            "1. Wait a few minutes before trying again",
-                            "2. Check your Google Cloud Console for quota limits",
-                            "3. Consider upgrading your API quota if needed"
-                        ]
-                    }
-                else:
-                    return {
-                        'status': 'api_error',
-                        'error': f"API connection failed: {error_msg}",
-                        'solution': "Please check your internet connection and API permissions.",
-                        'setup_steps': [
-                            "1. Check your internet connection",
-                            "2. Verify API services are enabled in Google Cloud Console",
-                            "3. Ensure the service account has proper permissions"
-                        ]
-                    }
-                    
         except Exception as e:
             return {
-                'status': 'unknown_error',
-                'error': f"Unexpected error checking credentials: {str(e)}",
-                'solution': "Please check the application logs for more details.",
+                'status': 'error',
+                'error': f"Error checking credentials: {str(e)}",
+                'solution': "Please verify your Google credentials configuration.",
                 'setup_steps': [
-                    "1. Check the application logs",
-                    "2. Restart the application",
-                    "3. Contact support if the issue persists"
+                    "1. Check the GOOGLE_CREDENTIALS environment variable format",
+                    "2. Ensure the JSON content is valid and complete",
+                    "3. Verify the service account has proper permissions"
                 ]
             }
     

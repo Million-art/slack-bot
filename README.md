@@ -33,7 +33,7 @@ A comprehensive Slack bot for managing Google Sheets, Excel files, and CSV files
 ### Python Dependencies
 ```
 flask
-slack-bolt
+slack-sdk
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
@@ -41,6 +41,7 @@ google-api-python-client
 pandas
 openpyxl
 python-dotenv
+gunicorn
 ```
 
 ## Installation
@@ -68,14 +69,25 @@ pip install -r requirements.txt
 #### Create Service Account
 1. Navigate to "IAM & Admin" > "Service Accounts"
 2. Click "Create Service Account"
-3. Download the JSON credentials file
-4. Place the file in the project root as `credentials.json`
+3. Give it a name like "slack-bot-service-account"
+4. Grant the following roles:
+   - **Editor** (for full access to Drive and Sheets)
+   - **Service Account Token Creator** (if using OAuth2)
+5. Click "Create and Continue"
+6. Click "Done"
+7. Click on the created service account
+8. Go to "Keys" tab
+9. Click "Add Key" > "Create new key" > "JSON"
+10. Download the JSON file
 
-#### Set Up OAuth2 (Optional)
+#### Set Up OAuth2 (Recommended for Production)
 1. Go to "APIs & Services" > "Credentials"
-2. Create OAuth 2.0 Client ID
-3. Download the client configuration file
-4. Place as `oauth_credentials.json`
+2. Click "Create Credentials" > "OAuth 2.0 Client IDs"
+3. Choose "Web application"
+4. Add authorized redirect URIs:
+   - `http://localhost:5000/oauth2callback` (for local development)
+   - `https://your-railway-app.railway.app/oauth2callback` (for production)
+5. Download the client configuration file
 
 ### 4. Configure Slack App
 
@@ -98,277 +110,200 @@ Add the following Bot Token Scopes:
 
 #### Configure Interactivity & Shortcuts
 1. Go to "Interactivity & Shortcuts"
-2. Set Request URL to: `https://your-domain.com/slack/interactions/command`
-3. Enable Interactivity
+2. Enable Interactivity
+3. Set Request URL to: `https://your-railway-app.railway.app/api/interactions/command`
 
 #### Configure Slash Commands
-Create the following slash command:
-- **Command**: `/start`
-- **Request URL**: `https://your-domain.com/api/command`
-- **Short Description**: Manage Google Sheets, Excel, and CSV files
+1. Go to "Slash Commands"
+2. Create command:
+   - **Command**: `/start`
+   - **Request URL**: `https://your-railway-app.railway.app/api/command`
+   - **Short Description**: Start the data manager bot
 
 ### 5. Environment Configuration
 
+#### Local Development
 Create a `.env` file in the project root:
-
 ```env
 # Slack Configuration
-SLACK_BOT_TOKEN=xoxb-your-bot-token
-SLACK_SIGNING_SECRET=your-signing-secret
+SLACK_SIGNING_SECRET=your_slack_signing_secret
+SLACK_BOT_TOKEN=xoxb-your_bot_token
 
 # Google Configuration
-GOOGLE_CREDENTIALS=credentials
-GOOGLE_OAUTH_CREDENTIALS=oauth_credentials
-GOOGLE_FOLDER_ID=your-google-drive-folder-id
- 
+GOOGLE_CREDENTIALS={"type":"service_account","project_id":"your-project","private_key_id":"...","private_key":"-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n","client_email":"your-service-account@your-project.iam.gserviceaccount.com","client_id":"...","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com"}
+
+GOOGLE_OAUTH_CREDENTIALS={"web":{"client_id":"your-oauth-client-id.apps.googleusercontent.com","project_id":"your-project","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"your-client-secret","redirect_uris":["http://localhost:5000/oauth2callback","https://your-railway-app.railway.app/oauth2callback"]}}
+
+# Optional Configuration
+GOOGLE_DRIVE_FOLDER_ID=your_folder_id
+ALLOWED_USER_IDS=user1,user2,user3
+FLASK_DEBUG=True
 ```
+
+#### Railway Production Deployment
+Set these environment variables in Railway dashboard:
+
+**Required Variables:**
+- `SLACK_SIGNING_SECRET`: Your Slack app signing secret
+- `SLACK_BOT_TOKEN`: Your Slack bot token (starts with `xoxb-`)
+- `GOOGLE_CREDENTIALS`: Full JSON content of your service account key (as a single line)
+- `GOOGLE_OAUTH_CREDENTIALS`: Full JSON content of your OAuth2 client configuration (as a single line)
+
+**Optional Variables:**
+- `GOOGLE_DRIVE_FOLDER_ID`: Specific folder ID to restrict access
+- `ALLOWED_USER_IDS`: Comma-separated list of Slack user IDs
+- `PORT`: Railway sets this automatically
+- `FLASK_DEBUG`: Set to `False` for production
+
+## Railway Deployment
+
+### 1. Prepare Your Repository
+Ensure your repository contains:
+- `requirements.txt` ✅
+- `Procfile` ✅
+- `runtime.txt` ✅
+- All application files ✅
+
+### 2. Deploy to Railway
+1. Go to [Railway](https://railway.app/)
+2. Click "New Project" > "Deploy from GitHub repo"
+3. Connect your GitHub account
+4. Select your repository
+5. Railway will automatically detect the Python app
+
+### 3. Configure Environment Variables
+1. In your Railway project dashboard, go to "Variables"
+2. Add all required environment variables (see above)
+3. **Important**: For `GOOGLE_CREDENTIALS` and `GOOGLE_OAUTH_CREDENTIALS`, paste the entire JSON content as a single line
+
+### 4. Update Slack App URLs
+1. Go to your Slack app settings
+2. Update the Request URLs to use your Railway domain:
+   - Interactivity: `https://your-app.railway.app/api/interactions/command`
+   - Slash Commands: `https://your-app.railway.app/api/command`
+
+### 5. Install the App
+1. Go to "OAuth & Permissions" in your Slack app
+2. Click "Install to Workspace"
+3. Copy the Bot User OAuth Token (starts with `xoxb-`)
+4. Add it to Railway environment variables
 
 ## Usage
 
-### Starting the Application
+### Starting the Bot
+1. **Local Development**: `python run.py`
+2. **Production**: Railway automatically starts the app
 
-#### Development Mode
-```bash
-python run.py
-```
+### Using the Bot
+1. In Slack, type `/start` to open the main menu
+2. Choose from available options:
+   - **Google Sheets**: List, create, read, update sheets
+   - **Excel Files**: List, create, read, update Excel files
+   - **CSV Files**: List, create, read, update CSV files
 
-#### Production Mode
-```bash
-gunicorn -w 4 -b 0.0.0.0:5000 main:app
-```
-
-### Slack Commands
-
-#### Main Command
-```
-/datamanager
-```
-Opens the main menu with options to:
-- List available files
-- Create new files
-- View file data
-- Update file data
-
-#### Available Actions
-
-**File Management**
-- List Google Sheets
-- List Excel Files
-- List CSV Files
-- Create new files
-
-**Data Operations**
-- View file data
-- Update cell values
-- Refresh data
-- Open update modal
-
-### File Type Support
-
-#### Google Sheets
-- **Read**: View sheet data with headers
-- **Update**: Modify individual cells
-- **Create**: New sheets with templates
-- **Headers**: Editable (no restrictions)
-
-#### Excel Files (.xlsx)
-- **Read**: View Excel data with headers
-- **Update**: Modify individual cells
-- **Create**: New Excel files with templates
-- **Headers**: Protected (warning displayed)
-- **Row Indexing**: Starts from row 2 (header is row 1)
-
-#### CSV Files
-- **Read**: View CSV data with headers
-- **Update**: Modify individual cells
-- **Create**: New CSV files with templates
-- **Headers**: Protected (warning displayed)
-- **Row Indexing**: Starts from row 2 (header is row 1)
+### File Operations
+- **List Files**: Browse available files by type
+- **Create File**: Create new files with templates
+- **Get Data**: View formatted spreadsheet data
+- **Update Cell**: Modify specific cells with row/column targeting
+- **Refresh Data**: Get latest data from source files
 
 ## Architecture
 
-### Project Structure
+### Core Components
+- **Flask App**: Web framework for handling HTTP requests
+- **Slack SDK**: Official Slack API client
+- **Google APIs**: Sheets and Drive API integration
+- **Pandas**: Data manipulation for Excel/CSV files
+- **Gunicorn**: WSGI server for production deployment
+
+### File Structure
 ```
 slack-bot/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── config.py
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── auth.py
-│   │   ├── cache.py
-│   │   └── rate_limiter.py
-│   ├── handlers/
-│   │   ├── __init__.py
-│   │   └── command_handler.py
-│   └── services/
-│       ├── __init__.py
-│       ├── google_service.py
-│       └── slack_service.py
-├── requirements.txt
-├── run.py
-└── .env
+│   ├── core/           # Core functionality (auth, logging, etc.)
+│   ├── handlers/       # Request handlers
+│   ├── services/       # Business logic (Google, Slack APIs)
+│   └── utils/          # Utility functions
+├── requirements.txt    # Python dependencies
+├── Procfile          # Railway deployment configuration
+├── runtime.txt       # Python version specification
+└── README.md         # This file
 ```
-
-### Core Components
-
-#### Google Service (`app/services/google_service.py`)
-- Handles Google Sheets API interactions
-- Manages Google Drive file operations
-- Processes Excel and CSV files using pandas
-- Implements file type detection and routing
-
-#### Slack Service (`app/services/slack_service.py`)
-- Manages Slack API interactions
-- Builds interactive message blocks
-- Handles modal creation and responses
-- Formats data for display
-
-#### Command Handler (`app/handlers/command_handler.py`)
-- Processes Slack slash commands
-- Handles interactive button clicks
-- Manages modal submissions
-- Routes operations to appropriate services
-
-### Data Flow
-
-1. **User Interaction**: User sends slash command or clicks button
-2. **Request Processing**: Command handler validates and routes request
-3. **Service Layer**: Google service performs file operations
-4. **Response Formatting**: Slack service formats response
-5. **User Feedback**: Formatted response sent to user
-
-## Configuration
-
-### Rate Limiting
-- **Default**: 100 requests per hour per user
-- **Configurable**: Via environment variables
-- **Protection**: Prevents API abuse
-
-### Caching
-- **In-memory**: Fast response times
-- **Session-based**: User-specific data
-- **Configurable**: Cache duration and size
-
-### Error Handling
-- **Comprehensive**: All operations wrapped in try-catch
-- **User-friendly**: Clear error messages
-- **Logging**: Detailed logs for debugging
-- **Recovery**: Automatic retry mechanisms
 
 ## Security
 
 ### Authentication
-- **Slack Verification**: Request signature validation
-- **Google OAuth**: Secure API access
-- **Service Account**: Fallback authentication
+- **Slack Verification**: All requests are verified using Slack's signing secret
+- **Google OAuth2**: Secure authentication with Google APIs
+- **User Authorization**: Optional user ID restrictions
 
 ### Data Protection
-- **Environment Variables**: Sensitive data protection
-- **Input Validation**: All user inputs sanitized
-- **Rate Limiting**: Protection against abuse
-- **Error Sanitization**: No sensitive data in error messages
+- **Environment Variables**: Sensitive data stored securely
+- **Rate Limiting**: Built-in protection against abuse
+- **Error Handling**: No sensitive data in error messages
 
 ## Troubleshooting
 
 ### Common Issues
 
 #### Google API Errors
-**Problem**: "Google credentials issue"
-**Solution**: 
-1. Verify credentials in .env exists
-2. Check service account permissions
-3. Ensure APIs are enabled in Google Cloud Console
+**Error**: "Invalid JWT Signature"
+- **Solution**: Ensure `GOOGLE_CREDENTIALS` contains the complete JSON content
+- **Check**: Verify the service account has proper permissions
+
+**Error**: "API connection failed"
+- **Solution**: Enable Google Sheets API and Google Drive API in Google Cloud Console
+- **Check**: Verify the service account has Editor role
 
 #### Slack Integration Issues
-**Problem**: "Slack verification failed"
-**Solution**:
-1. Verify SLACK_SIGNING_SECRET in .env
-2. Check Request URL configuration
-3. Ensure bot token has correct scopes
+**Error**: "dispatch_failed"
+- **Solution**: Check that `SLACK_BOT_TOKEN` is correct and the app is installed
+- **Check**: Verify the bot has required scopes
 
-#### File Access Issues
-**Problem**: "File not found" or "Permission denied"
-**Solution**:
-1. Share Google Drive folder with service account
-2. Verify file permissions
-3. Check GOOGLE_FOLDER_ID configuration
- 
+**Error**: "invalid_arguments"
+- **Solution**: Ensure Request URLs are correctly set in Slack app settings
+- **Check**: Verify the Railway app is running and accessible
 
-## Development
+#### Railway Deployment Issues
+**Error**: "ModuleNotFoundError: No module named 'dotenv'"
+- **Solution**: All dependencies are in `requirements.txt` and should install automatically
+- **Check**: Verify `requirements.txt` is in the repository root
 
-### Adding New Features
+**Error**: "Google credentials issue: No Google credentials found"
+- **Solution**: Set `GOOGLE_CREDENTIALS` environment variable in Railway
+- **Check**: Ensure the JSON content is pasted as a single line
 
-#### New File Type Support
-1. Add file type detection in `google_service.py`
-2. Implement read/write methods
-3. Add UI components in `slack_service.py`
-4. Update command handler routing
+**Error**: "Invalid JWT Signature" on Railway
+- **Solution**: The JSON content in environment variables must be properly escaped
+- **Check**: Use Railway's web interface to set variables, not command line
 
-#### New Commands
-1. Add command handler function
-2. Register route in `command_handler.py`
-3. Add UI components in `slack_service.py`
-4. Update main menu integration
+### Environment Variable Format for Railway
+For Railway deployment, environment variables should be set as follows:
 
-### Testing
-```bash
-# Run syntax check
-python -m py_compile app/handlers/command_handler.py
-
-# Test imports
-python -c "import app.services.google_service; import app.services.slack_service"
-
-# Run application
-python run.py
+**GOOGLE_CREDENTIALS** (single line):
+```
+{"type":"service_account","project_id":"your-project","private_key_id":"abc123","private_key":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC...\n-----END PRIVATE KEY-----\n","client_email":"your-service@your-project.iam.gserviceaccount.com","client_id":"123456789","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/your-service%40your-project.iam.gserviceaccount.com"}
 ```
 
-## Deployment
-
-### Production Checklist
-- [ ] Set FLASK_ENV=production
-- [ ] Configure proper SECRET_KEY
-- [ ] Set up HTTPS endpoints
-- [ ] Configure logging
-- [ ] Set up monitoring
-- [ ] Test all file types
-- [ ] Verify rate limiting
-- [ ] Check error handling
-
-### Environment Variables
-```env
-# Required
-SLACK_BOT_TOKEN=xoxb-your-bot-token
-SLACK_SIGNING_SECRET=your-signing-secret
-GOOGLE_CREDENTIALS=your-credentials-json-content
-GOOGLE_DRIVE_FOLDER_ID=your-folder-id
-GOOGLE_OAUTH_CREDENTIALS=your-oauth-credentials-json-content
-ALLOWED_USER_IDS=U1234567890,U0987654321
+**GOOGLE_OAUTH_CREDENTIALS** (single line):
 ```
+{"web":{"client_id":"your-client-id.apps.googleusercontent.com","project_id":"your-project","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"your-client-secret","redirect_uris":["http://localhost:5000/oauth2callback","https://your-app.railway.app/oauth2callback"]}}
+```
+
+### Development vs Production
+- **Local**: Uses `.env` file and file-based credentials
+- **Production**: Uses Railway environment variables and OAuth2 token caching
+- **Testing**: Use Railway's built-in logging to debug issues
 
 ## Support
 
-### Getting Help
-1. Check the troubleshooting section
-2. Review application logs
-3. Verify configuration settings
-4. Test with different file types
+For issues and questions:
+1. Check the troubleshooting section above
+2. Review Railway logs for detailed error messages
+3. Verify all environment variables are correctly set
+4. Ensure Google Cloud APIs are enabled and properly configured
 
-### Contributing
-1. Fork the repository
-2. Create feature branch
-3. Make changes with tests
-4. Submit pull request
+## License
 
-
-## Changelog
-
-### Version 1.0.0
-- Initial release
-- Google Sheets CRUD operations
-- Excel file support with pandas
-- CSV file support
-- Interactive Slack interface
-- Rate limiting and caching
-- Comprehensive error handling 
+This project is licensed under the MIT License. 

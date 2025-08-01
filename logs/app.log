@@ -5272,3 +5272,115 @@ The server responded with: {'ok': False, 'error': 'invalid_arguments', 'response
 2025-08-01 10:15:11,570 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 18
 2025-08-01 10:15:11,624 - werkzeug - WARNING - _log:97 -  * Debugger is active!
 2025-08-01 10:15:11,638 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
+2025-08-01 22:36:00,042 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:36:00,047 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:36:08,037 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:36:10,388 - app.services.google_service - INFO - _get_oauth_credentials:121 - Refreshed OAuth2 token
+2025-08-01 22:36:10,391 - app.services.google_service - INFO - _get_oauth_credentials:147 - Saved OAuth2 token to file
+2025-08-01 22:36:10,417 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:36:10,488 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:36:10,531 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:36:10,588 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 8
+2025-08-01 22:36:10,590 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 9
+2025-08-01 22:36:10,591 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 10
+2025-08-01 22:36:10,593 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 11
+2025-08-01 22:36:10,604 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 12
+2025-08-01 22:36:10,607 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 13
+2025-08-01 22:36:10,621 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 14
+2025-08-01 22:36:10,622 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 15
+2025-08-01 22:36:10,622 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 16
+2025-08-01 22:36:10,623 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 17
+2025-08-01 22:36:10,624 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 18
+2025-08-01 22:36:11,155 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.190:5000
+2025-08-01 22:36:11,156 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-08-01 22:36:11,159 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-08-01 22:36:11,958 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:36:11,959 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:36:14,148 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:36:14,155 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:36:14,163 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:36:14,167 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:36:14,184 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 8
+2025-08-01 22:36:14,191 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 9
+2025-08-01 22:36:14,195 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 10
+2025-08-01 22:36:14,198 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 11
+2025-08-01 22:36:14,199 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 12
+2025-08-01 22:36:14,199 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 13
+2025-08-01 22:36:14,200 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 14
+2025-08-01 22:36:14,200 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 15
+2025-08-01 22:36:14,201 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 16
+2025-08-01 22:36:14,201 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 17
+2025-08-01 22:36:14,202 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 18
+2025-08-01 22:36:14,253 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-08-01 22:36:14,273 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
+2025-08-01 22:39:26,789 - werkzeug - INFO - _log:97 -  * Detected change in 'C:\\Users\\dell\\Desktop\\slack-bot\\app\\services\\slack_service.py', reloading
+2025-08-01 22:39:27,847 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-08-01 22:39:34,549 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:39:34,553 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:44:14,019 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:44:14,019 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:51:02,768 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:51:02,773 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:51:05,006 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:51:05,016 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:51:05,061 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:51:05,071 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:51:05,128 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 8
+2025-08-01 22:51:05,130 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 9
+2025-08-01 22:51:05,133 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 10
+2025-08-01 22:51:05,135 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 11
+2025-08-01 22:51:05,137 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 12
+2025-08-01 22:51:05,142 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 13
+2025-08-01 22:51:05,147 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 14
+2025-08-01 22:51:05,160 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 15
+2025-08-01 22:51:05,163 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 16
+2025-08-01 22:51:05,165 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 17
+2025-08-01 22:51:05,167 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 18
+2025-08-01 22:51:05,312 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.190:5000
+2025-08-01 22:51:05,313 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-08-01 22:51:05,320 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-08-01 22:51:06,428 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:51:06,433 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:51:08,374 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:51:08,379 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:51:08,392 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:51:08,398 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:51:08,447 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 8
+2025-08-01 22:51:08,448 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 9
+2025-08-01 22:51:08,449 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 10
+2025-08-01 22:51:08,455 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 11
+2025-08-01 22:51:08,456 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 12
+2025-08-01 22:51:08,458 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 13
+2025-08-01 22:51:08,462 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 14
+2025-08-01 22:51:08,463 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 15
+2025-08-01 22:51:08,464 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 16
+2025-08-01 22:51:08,467 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 17
+2025-08-01 22:51:08,468 - dotenv.main - WARNING - with_warn_for_invalid_lines:27 - Python-dotenv could not parse statement starting at line 18
+2025-08-01 22:51:08,536 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-08-01 22:51:08,546 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
+2025-08-01 22:54:41,664 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:54:41,665 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:54:49,228 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:54:49,236 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:54:49,286 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:54:49,317 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:54:49,479 - werkzeug - INFO - _log:97 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.190:5000
+2025-08-01 22:54:49,480 - werkzeug - INFO - _log:97 - [33mPress CTRL+C to quit[0m
+2025-08-01 22:54:49,484 - werkzeug - INFO - _log:97 -  * Restarting with stat
+2025-08-01 22:54:50,165 - app.core.cache - INFO - init_cache:28 - In-memory cache initialized successfully
+2025-08-01 22:54:50,165 - app.core.rate_limiter - INFO - init_rate_limiter:28 - Rate limiter initialized: 100 requests per 3600 seconds
+2025-08-01 22:54:51,696 - app.services.google_service - INFO - _get_oauth_credentials:112 - Loaded OAuth2 token from file
+2025-08-01 22:54:51,701 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:54:51,712 - googleapiclient.discovery_cache - INFO - autodetect:49 - file_cache is only supported with oauth2client<4.0.0
+2025-08-01 22:54:51,725 - app.services.google_service - INFO - _init_google_clients:223 - Google API clients initialized with OAuth2
+2025-08-01 22:54:51,810 - werkzeug - WARNING - _log:97 -  * Debugger is active!
+2025-08-01 22:54:51,828 - werkzeug - INFO - _log:97 -  * Debugger PIN: 871-558-511
