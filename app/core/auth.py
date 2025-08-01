@@ -129,7 +129,10 @@ def require_auth(f):
         
         # Check user permission
         if not check_user_permission(user_id):
-            return jsonify({'error': 'Access denied'}), 403
+            return jsonify({
+                'response_type': 'ephemeral',
+                'text': '🔒 *Access Denied*\nYou are not authorized to use this bot. Please contact your administrator to get access.'
+            })
         
         # Add user_id to request context
         request.user_id = user_id
