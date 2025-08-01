@@ -360,16 +360,17 @@ python run.py
 # Required
 SLACK_BOT_TOKEN=xoxb-your-bot-token
 SLACK_SIGNING_SECRET=your-signing-secret
-GOOGLE_CREDENTIALS_FILE=credentials.json
-GOOGLE_OAUTH_CREDENTIALS_FILE=oauth_credentials.json
-GOOGLE_FOLDER_ID=your-folder-id
+GOOGLE_CREDENTIALS=your-credentials-json-content
+GOOGLE_DRIVE_FOLDER_ID=your-folder-id
 
 # Optional
+GOOGLE_OAUTH_CREDENTIALS=your-oauth-credentials-json-content
 FLASK_ENV=production
 SECRET_KEY=your-secret-key
 RATE_LIMIT_REQUESTS=100
 RATE_LIMIT_WINDOW=3600
 LOG_LEVEL=INFO
+ALLOWED_USER_IDS=U1234567890,U0987654321
 ```
 
 ## Support

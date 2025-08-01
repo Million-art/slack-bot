@@ -47,6 +47,30 @@ class GoogleService:
         # Initialize Google API clients
         self._init_google_clients()
     
+    def _get_credentials_from_env(self):
+        """Get service account credentials from environment variable."""
+        credentials_json = os.getenv('GOOGLE_CREDENTIALS')
+        if credentials_json:
+            try:
+                credentials_dict = json.loads(credentials_json)
+                return service_account.Credentials.from_service_account_info(credentials_dict, scopes=SCOPES)
+            except Exception as e:
+                logger.error(f"Failed to parse GOOGLE_CREDENTIALS from environment: {e}")
+                return None
+        return None
+    
+    def _get_oauth_credentials_from_env(self):
+        """Get OAuth credentials from environment variable."""
+        oauth_json = os.getenv('GOOGLE_OAUTH_CREDENTIALS')
+        if oauth_json:
+            try:
+                oauth_dict = json.loads(oauth_json)
+                return oauth_dict
+            except Exception as e:
+                logger.error(f"Failed to parse GOOGLE_OAUTH_CREDENTIALS from environment: {e}")
+                return None
+        return None
+    
     def _get_oauth_credentials(self):
         """Get OAuth2 credentials with automatic token refresh."""
         creds = None
@@ -72,18 +96,30 @@ class GoogleService:
                     creds = None
             
             if not creds:
-                # Check if OAuth credentials file exists
-                if os.path.exists(self.oauth_credentials_file):
+                # Try to get OAuth credentials from environment first
+                oauth_dict = self._get_oauth_credentials_from_env()
+                if oauth_dict:
+                    try:
+                        flow = InstalledAppFlow.from_client_secrets_dict(oauth_dict, SCOPES)
+                        creds = flow.run_local_server(port=0)
+                        logger.info("Created new OAuth2 credentials from environment")
+                    except Exception as e:
+                        logger.error(f"Failed to create OAuth2 credentials from environment: {e}")
+                        creds = None
+                
+                # Fallback to file if environment not available
+                if not creds and os.path.exists(self.oauth_credentials_file):
                     try:
                         flow = InstalledAppFlow.from_client_secrets_file(
                             self.oauth_credentials_file, SCOPES)
                         creds = flow.run_local_server(port=0)
-                        logger.info("Created new OAuth2 credentials")
+                        logger.info("Created new OAuth2 credentials from file")
                     except Exception as e:
-                        logger.error(f"Failed to create OAuth2 credentials: {e}")
+                        logger.error(f"Failed to create OAuth2 credentials from file: {e}")
                         return None
-                else:
-                    logger.info("OAuth credentials file not found, falling back to service account")
+                
+                if not creds:
+                    logger.info("OAuth credentials not found, falling back to service account")
                     return None
             
             # Save the credentials for next run
@@ -264,11 +300,18 @@ class GoogleService:
                 'https://www.googleapis.com/auth/drive.file'
             ]
             
-            # Load credentials
-            credentials = service_account.Credentials.from_service_account_file(
-                self.credentials_file, 
-                scopes=scopes
-            )
+            # Try to get credentials from environment first
+            credentials = self._get_credentials_from_env()
+            
+            # Fallback to file if environment not available
+            if not credentials and os.path.exists(self.credentials_file):
+                credentials = service_account.Credentials.from_service_account_file(
+                    self.credentials_file, 
+                    scopes=scopes
+                )
+            
+            if not credentials:
+                raise Exception("No valid Google credentials found in environment or file")
             
             # Build API clients
             self.sheets_service = build('sheets', 'v4', credentials=credentials)
