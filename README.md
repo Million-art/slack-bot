@@ -1,5 +1,4 @@
 # Slack Data Manager Bot
-
 A comprehensive Slack bot for managing Google Sheets, Excel files, and CSV files stored on Google Drive. This bot provides Create, Read, and Update operations for spreadsheet data directly within Slack.
 
 ## Features
@@ -10,6 +9,7 @@ A comprehensive Slack bot for managing Google Sheets, Excel files, and CSV files
 - **CSV Files**: Read, update, and create new CSV files
 - **File Listing**: Browse available files by type
 - **File Creation**: Create new files with templates
+- **Automatic Ownership**: Bot-owned files require no manual sharing
 
 ### Data Operations
 - **Read Data**: View spreadsheet data with formatted display
@@ -69,7 +69,8 @@ pip install -r requirements.txt
 1. Navigate to "IAM & Admin" > "Service Accounts"
 2. Click "Create Service Account"
 3. Download the JSON credentials file
-4. Place the file in the project root as `credentials.json`
+4. **Important**: The service account will own and manage all files created by the bot
+5. Place the file in the project root as `credentials.json`
 
 #### Set Up OAuth2 (Optional)
 1. Go to "APIs & Services" > "Credentials"
@@ -89,22 +90,19 @@ pip install -r requirements.txt
 #### Configure OAuth & Permissions
 Add the following Bot Token Scopes:
 - `chat:write`
-- `chat:write.public`
 - `commands`
 - `files:read`
-- `im:history`
-- `im:read`
-- `im:write`
+- `files:write`
 
 #### Configure Interactivity & Shortcuts
 1. Go to "Interactivity & Shortcuts"
-2. Set Request URL to: `https://your-domain.com/slack/interactions/command`
+2. Set Request URL to: `https://slack-bot-production-92d7.up.railway.app/slack/interactions/command`
 3. Enable Interactivity
 
 #### Configure Slash Commands
 Create the following slash command:
 - **Command**: `/start`
-- **Request URL**: `https://your-domain.com/api/command`
+- **Request URL**: `https://slack-bot-production-92d7.up.railway.app/api/command`
 - **Short Description**: Manage Google Sheets, Excel, and CSV files
 
 ### 5. Environment Configuration
@@ -120,7 +118,9 @@ SLACK_SIGNING_SECRET=your-signing-secret
 GOOGLE_CREDENTIALS=credentials
 GOOGLE_OAUTH_CREDENTIALS=oauth_credentials
 GOOGLE_FOLDER_ID=your-google-drive-folder-id
-  
+
+# Note: The service account will own all files created by the bot
+# No manual sharing required for bot-created files
 ```
 
 ## Usage
@@ -141,7 +141,7 @@ gunicorn -w 4 -b 0.0.0.0:5000 main:app
 
 #### Main Command
 ```
-/start
+/datamanager
 ```
 Opens the main menu with options to:
 - List available files
@@ -218,6 +218,7 @@ slack-bot/
 - Manages Google Drive file operations
 - Processes Excel and CSV files using pandas
 - Implements file type detection and routing
+- Uses service account for automatic file ownership
 
 #### Slack Service (`app/services/slack_service.py`)
 - Manages Slack API interactions
@@ -291,9 +292,10 @@ slack-bot/
 #### File Access Issues
 **Problem**: "File not found" or "Permission denied"
 **Solution**:
-1. Share Google Drive folder with service account
-2. Verify file permissions
-3. Check GOOGLE_FOLDER_ID configuration
+1. **For new files**: The bot creates and owns files automatically - no sharing needed
+2. **For existing files**: Share specific files with the service account email if needed
+3. Verify file permissions
+4. Check GOOGLE_FOLDER_ID configuration
   
 
 ## Development
