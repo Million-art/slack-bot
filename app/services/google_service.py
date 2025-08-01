@@ -53,6 +53,11 @@ class GoogleService:
         if not credentials_json:
             logger.warning("GOOGLE_CREDENTIALS environment variable not found")
             return None
+        
+        # Check if the value is just whitespace
+        if credentials_json.strip() == "":
+            logger.error("GOOGLE_CREDENTIALS environment variable is empty or contains only whitespace")
+            return None
             
         try:
             # Parse JSON from environment variable
@@ -82,6 +87,8 @@ class GoogleService:
             
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse GOOGLE_CREDENTIALS JSON: {e}")
+            logger.error(f"JSON content length: {len(credentials_json)} characters")
+            logger.error(f"First 100 characters: {credentials_json[:100]}")
             return None
         except Exception as e:
             logger.error(f"Failed to create credentials from environment: {e}")
