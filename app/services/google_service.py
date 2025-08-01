@@ -107,19 +107,8 @@ class GoogleService:
                         logger.error(f"Failed to create OAuth2 credentials from environment: {e}")
                         creds = None
                 
-                # Fallback to file if environment not available
-                if not creds and os.path.exists(self.oauth_credentials_file):
-                    try:
-                        flow = InstalledAppFlow.from_client_secrets_file(
-                            self.oauth_credentials_file, SCOPES)
-                        creds = flow.run_local_server(port=0)
-                        logger.info("Created new OAuth2 credentials from file")
-                    except Exception as e:
-                        logger.error(f"Failed to create OAuth2 credentials from file: {e}")
-                        return None
-                
                 if not creds:
-                    logger.info("OAuth credentials not found, falling back to service account")
+                    logger.info("OAuth credentials not found in environment, falling back to service account")
                     return None
             
             # Save the credentials for next run
@@ -141,48 +130,46 @@ class GoogleService:
             Dict[str, Any]: Status and details about credentials
         """
         try:
-            # Check if credentials file exists
-            if not os.path.exists(self.credentials_file):
-                return {
-                    'status': 'missing_file',
-                    'error': f"Google credentials file not found at: {self.credentials_file}",
-                    'solution': "Please download your service account JSON file and place it in the credentials folder.",
-                    'setup_steps': [
-                        "1. Go to Google Cloud Console (https://console.cloud.google.com/)",
-                        "2. Create a new project or select existing one",
-                        "3. Enable Google Sheets API and Google Drive API",
-                        "4. Create a Service Account",
-                        "5. Download the JSON key file",
-                        "6. Place it in the 'credentials' folder as 'service-account.json'"
-                    ]
-                }
+            # Try to get credentials from environment first
+            credentials = self._get_credentials_from_env()
+            if credentials:
+                # Test API connection with environment credentials
+                try:
+                    test_service = build('drive', 'v3', credentials=credentials)
+                    test_service.files().list(pageSize=1).execute()
+                    
+                    # Get project info from credentials
+                    project_id = credentials.service_account_email.split('@')[1].split('.')[0] if credentials.service_account_email else 'Unknown'
+                    
+                    return {
+                        'status': 'valid',
+                        'message': "Google credentials from environment are properly configured and working.",
+                        'project_id': project_id,
+                        'client_email': credentials.service_account_email or 'Unknown'
+                    }
+                except Exception as e:
+                    return {
+                        'status': 'api_error',
+                        'error': f"API connection failed with environment credentials: {str(e)}",
+                        'solution': "Please check your Google Cloud API permissions and service account setup.",
+                        'setup_steps': [
+                            "1. Verify the GOOGLE_CREDENTIALS environment variable is set correctly",
+                            "2. Ensure the service account has proper API permissions",
+                            "3. Check that Google Sheets and Drive APIs are enabled"
+                        ]
+                    }
             
-            # Check if credentials file is readable
-            try:
-                with open(self.credentials_file, 'r') as f:
-                    cred_data = json.load(f)
-            except json.JSONDecodeError:
-                return {
-                    'status': 'invalid_json',
-                    'error': f"Invalid JSON format in credentials file: {self.credentials_file}",
-                    'solution': "Please ensure the credentials file contains valid JSON.",
-                    'setup_steps': [
-                        "1. Download a fresh copy of your service account JSON file",
-                        "2. Ensure the file is not corrupted",
-                        "3. Place it in the 'credentials' folder"
-                    ]
-                }
-            except Exception as e:
-                return {
-                    'status': 'file_error',
-                    'error': f"Cannot read credentials file: {str(e)}",
-                    'solution': "Please check file permissions and ensure the file is accessible.",
-                    'setup_steps': [
-                        "1. Check file permissions",
-                        "2. Ensure the file is not locked by another process",
-                        "3. Try downloading the credentials file again"
-                    ]
-                }
+            # No environment credentials found
+            return {
+                'status': 'missing_credentials',
+                'error': "No Google credentials found in environment",
+                'solution': "Please set GOOGLE_CREDENTIALS environment variable with your JSON content.",
+                'setup_steps': [
+                    "1. Set GOOGLE_CREDENTIALS environment variable with your JSON content",
+                    "2. Ensure Google Sheets API and Google Drive API are enabled",
+                    "3. Verify the service account has proper permissions"
+                ]
+            }
             
             # Check required fields in credentials
             required_fields = ['type', 'project_id', 'private_key_id', 'private_key', 'client_email']
@@ -300,18 +287,11 @@ class GoogleService:
                 'https://www.googleapis.com/auth/drive.file'
             ]
             
-            # Try to get credentials from environment first
+            # Get credentials from environment
             credentials = self._get_credentials_from_env()
             
-            # Fallback to file if environment not available
-            if not credentials and os.path.exists(self.credentials_file):
-                credentials = service_account.Credentials.from_service_account_file(
-                    self.credentials_file, 
-                    scopes=scopes
-                )
-            
             if not credentials:
-                raise Exception("No valid Google credentials found in environment or file")
+                raise Exception("No valid Google credentials found in environment. Please set GOOGLE_CREDENTIALS environment variable.")
             
             # Build API clients
             self.sheets_service = build('sheets', 'v4', credentials=credentials)
